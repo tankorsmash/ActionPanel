@@ -6,13 +6,27 @@
 #include "2d/CCActionInterval.h"
 #include "2d/CCActionEase.h"
 
-#include "constants.h"
-#include "MiscUI.h"
-#include "NodeBuilder.h"
+#include <cocostudio/ActionTimeline/CSLoader.h>
+
+void prep_button(cocos2d::Node* button)
+{
+    //do your own loading of textures and fonts here
+}
+
+cocos2d::Node* get_prebuilt_node_from_csb(std::string path)
+{
+	auto inst = cocos2d::CSLoader::getInstance();
+	cocos2d::Node* node =  inst->createNode(path);
+	return node;
+}
+
+
+#define TOUCH_CALLBACK_PARAMS cocos2d::Ref* target, TouchEventType evt
+
 
 bool ActionPanel::init()
 {
-    auto node = get_prebuilt_node_from_csb("panels/animation_panel.csb");
+    auto node = get_prebuilt_node_from_csb("animation_panel.csb");
     this->_panel = dynamic_cast<cocos2d::ui::Layout*>(node->getChildByName("animation_panel"));
     this->_panel->removeFromParent();
     this->_panel->setPosition({ 460, 320 });
